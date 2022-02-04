@@ -7,7 +7,7 @@ function [out] = get_matrix(syg, waw, dec)
   wsp = mat * syg;
   lmb = sqrt(2*log(size)) * median(abs(wsp(size / 2 : size))) / 0.6745;
 
-  for i = 1 : size
+  parfor i = 1 : size
 
     if abs(wsp(i)) <= lmb
 

@@ -1,4 +1,4 @@
-function [u, c, w] = get_uncertainty(y)
+function [u, c, s, w] = get_uncertainty(y)
 
   assert(isvector(y), 'y must be a vector');
 
@@ -34,7 +34,8 @@ function [u, c, w] = get_uncertainty(y)
 
   end
 
-  w = std(y);
-  c = u / w;
+  s = std(y);
+  w = var(y);
+  c = u / s;
 
 end

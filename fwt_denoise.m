@@ -5,7 +5,7 @@ function [out] = fwt_denoise(wsp, info, type = 'hard')
 
   if type == 'hard'
 
-    for i = 1 : info.Ls
+    parfor i = 1 : info.Ls
 
       if abs(out(i)) <= lmb
 
