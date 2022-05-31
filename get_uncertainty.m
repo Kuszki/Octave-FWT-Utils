@@ -1,4 +1,4 @@
-function [u, c, s, w] = get_uncertainty(y)
+function [u, c, s, w] = get_uncertainty(y, num = 4, mode = "div")
 
   assert(isvector(y), 'y must be a vector');
 
@@ -6,8 +6,18 @@ function [u, c, s, w] = get_uncertainty(y)
   il = 0;
   ir = 0;
 
-  l = idivide(length(y), 10, 'fix');
-  a = idivide(l, 2, 'fix');
+  if mode == "div"
+
+    l = idivide(int32(length(y)), int32(num), 'fix');
+
+  else
+
+    l = num;
+
+  end
+
+  a = idivide(int32(l), int32(2), 'fix');
+  y = y .- mean(y);
 
   [n, x] = hist(y, l, 1);
 
