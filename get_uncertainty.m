@@ -1,4 +1,4 @@
-function [u, c, s, w] = get_uncertainty(y, alpha = 0.95, cut = 5, num = 4, mode = "div")
+function [u, c, s, w] = get_uncertainty(y, alpha = 0.95, cut = 5, num = 2, mode = "div")
 
   assert(isvector(y), 'y must be a vector');
   assert(alpha > 0 && alpha < 1, 'alpha must be in range (0, 1)');
@@ -22,7 +22,7 @@ function [u, c, s, w] = get_uncertainty(y, alpha = 0.95, cut = 5, num = 4, mode 
     end
   end
 
-  y = yc .- mean(yc);
+  y = yc - mean(yc);
 
   if mode == "div"
 
