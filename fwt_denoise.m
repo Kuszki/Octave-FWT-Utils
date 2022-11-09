@@ -3,7 +3,7 @@ function [out] = fwt_denoise(wsp, info, type = 'hard')
   lmb = sqrt(2*log(info.Ls)) * median(abs(wsp(info.Lc(info.J + 1) : length(wsp)))) / 0.6745;
   out = wsp;
 
-  if type == 'hard'
+  if strcmp(type, 'hard')
 
     parfor i = 1 : info.Ls
 
