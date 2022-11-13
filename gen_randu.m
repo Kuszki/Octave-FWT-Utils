@@ -1,4 +1,4 @@
-function [vect] = gen_randu(n, u = 1, c = 1.65)
+function [vect] = gen_randu(n, u = 1, mode = 'u', c = 1.650)
 
   assert(n > 0, 'n must be greater than zero');
   assert(u > 0, 'u must be greater than zero');
@@ -7,6 +7,12 @@ function [vect] = gen_randu(n, u = 1, c = 1.65)
   r = rand(1, n);
   r = r - mean(r);
 
-  vect = r * u / c / std(r);
+  switch (mode)
+    case 'w'
+      vect = r * u^2 / std(r);
+    case 's'
+      vect = r * u / std(r);
+    otherwise
+      vect = r * u / c / std(r);
 
 end
