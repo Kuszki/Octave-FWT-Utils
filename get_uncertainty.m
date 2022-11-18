@@ -9,7 +9,6 @@ function [u, c, s, w] = get_uncertainty(y, alpha = 0.95, cut = 5, num = 2, mode 
   il = 0;
   ir = 0;
 
-  yc = zeros(1, length(y));
   stdev = std(y)*cut;
   numok = 0;
 
