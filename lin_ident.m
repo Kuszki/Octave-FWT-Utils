@@ -1,11 +1,39 @@
-function [wsp] = lin_ident(f, n)
+function [wsp] = lin_ident(f, n, parallel = "auto")
 
-  fun = @(i) f(gen_ones(n, i));
-  par = pararrayfun(nproc, fun, 1:n, 'UniformOutput', false);
+  if strcmp(parallel, "auto")
+    parallel = n > 128;
+  end
 
-  parfor i = 1 : n
+  if parallel
 
-    wsp(:,i) = cell2mat(par(i));
+    col = f(gen_ones(n, 1));
+    len = length(col);
+
+    fun = @(i) f(gen_ones(n, i));
+    par = pararrayfun(nproc, fun, 2:n, 'UniformOutput', false);
+
+    wsp = zeros(len, n);
+    wsp(:,1) = col;
+
+    parfor i = 2 : n
+
+      wsp(:,i) = cell2mat(par(i-1));
+
+    end
+
+  else
+
+    col = f(gen_ones(n, 1));
+    len = length(col);
+
+    wsp = zeros(len, n);
+    wsp(:,1) = col;
+
+    for i = 2 : n
+
+      wsp(:,i) = f(gen_ones(n, i));
+
+    end
 
   end
 

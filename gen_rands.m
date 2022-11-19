@@ -15,5 +15,6 @@ function [vect] = gen_rands(n, u = 1, mode = 'u', c = 1.415)
       vect = sin(r) * u * 1.415;
     otherwise
       vect = sin(r) * u * c / 1.415;
+  end
 
 end

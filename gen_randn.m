@@ -14,5 +14,6 @@ function [vect] = gen_randn(n, u = 1, mode = 'u', c = 1.960)
       vect = r * u / std(r);
     otherwise
       vect = r * u / c / std(r);
+  end
 
 end
