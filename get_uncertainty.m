@@ -1,4 +1,4 @@
-function [u, c, s, w] = get_uncertainty(y, alpha = 0.95, cut = 5, num = 2, mode = 'div')
+function [u, c, s, w] = get_uncertainty(y, alpha = 0.95, cut = 5, num = 8, mode = 'div')
 
   assert(isvector(y), 'y must be a vector');
   assert(alpha > 0 && alpha < 1, 'alpha must be in range (0, 1)');
@@ -16,21 +16,16 @@ function [u, c, s, w] = get_uncertainty(y, alpha = 0.95, cut = 5, num = 2, mode 
     if abs(y(j)) < stdev
 
       numok = numok + 1;
-      yc(numok) = y(j);
+      y(numok) = y(j);
 
     end
   end
 
-  y = yc - mean(yc);
+  y = y(1 : numok);
+  y = y - mean(y);
 
-  if strcmp(mode, 'div')
-
-    l = idivide(int32(length(y)), int32(num), 'fix');
-
-  else
-
-    l = num;
-
+  if !strcmp(mode, 'div'); l = num;
+  else; l = floor(length(y) / num);
   end
 
   a = idivide(int32(l), int32(2), 'fix');
@@ -60,8 +55,8 @@ function [u, c, s, w] = get_uncertainty(y, alpha = 0.95, cut = 5, num = 2, mode 
 
   end
 
-  s = std(y);
   w = var(y);
+  s = sqrt(w);
   c = u / s;
 
 end
