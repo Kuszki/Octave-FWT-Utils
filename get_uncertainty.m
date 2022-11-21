@@ -10,10 +10,11 @@ function [u, c, s, w] = get_uncertainty(y, alpha = 0.95, cut = 5, num = 8, mode 
   ir = 0;
 
   stdev = std(y)*cut;
+  tmpmn = mean(y);
   numok = 0;
 
   for j = 1 : length(y)
-    if abs(y(j)) < stdev
+    if abs(y(j) - tmpmn) < stdev
 
       numok = numok + 1;
       y(numok) = y(j);
