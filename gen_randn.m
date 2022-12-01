@@ -9,7 +9,7 @@ function [vect] = gen_randn(n, u = 1, mode = 'u', c = 1.960)
 
   switch (mode)
     case 'w'
-      vect = r * u^2 / std(r);
+      vect = r * sqrt(u) / std(r);
     case 's'
       vect = r * u / std(r);
     otherwise

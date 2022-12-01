@@ -10,7 +10,7 @@ function [vect] = gen_rands(n, u = 1, mode = 'u', c = 1.415)
 
   switch (mode)
     case 'w'
-      vect = sin(r) * u^2 * 1.415;
+      vect = sin(r) * sqrt(u) * 1.415;
     case 's'
       vect = sin(r) * u * 1.415;
     otherwise
