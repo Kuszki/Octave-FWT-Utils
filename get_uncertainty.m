@@ -1,8 +1,7 @@
-function [u, c, s, w] = get_uncertainty(y, alpha = 0.95, cut = 5, num = 8, mode = 'div')
+function [u, c, s, w] = get_uncertainty(y, alpha = 0.95, cut = 0, num = 8, mode = 'div')
 
   assert(isvector(y), 'y must be a vector');
   assert(alpha > 0 && alpha < 1, 'alpha must be in range (0, 1)');
-  assert(cut > 1, 'cut must be greater than 1');
   assert(num >= 1, 'num must be greater or equal 1');
 
   t = 0.0;
@@ -13,24 +12,32 @@ function [u, c, s, w] = get_uncertainty(y, alpha = 0.95, cut = 5, num = 8, mode 
   tmpmn = mean(y);
   numok = 0;
 
-  for j = 1 : length(y)
-    if abs(y(j) - tmpmn) < stdev
+  if cut > 1
 
-      numok = numok + 1;
-      y(numok) = y(j);
+    for j = 1 : length(y)
+      if abs(y(j) - tmpmn) < stdev
 
+        numok = numok + 1;
+
+        if j != numok
+          y(numok) = y(j);
+        end
+
+      end
     end
-  end
 
-  y = y(1 : numok);
-  y = y - mean(y);
+    y = y(1 : numok);
+    y = y - mean(y);
+
+  else
+    y = y - tmpmn;
+  end
 
   if !strcmp(mode, 'div'); l = num;
   else; l = floor(length(y) / num);
   end
 
   a = idivide(int32(l), int32(2), 'fix');
-
   [n, x] = hist(y, l, 1);
 
   if mod(l, 2)
