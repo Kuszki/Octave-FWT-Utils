@@ -1,8 +1,10 @@
-function [u, c, s, w] = get_uncertainty(y, alpha = 0.95, cut = 0, num = 8, mode = 'div')
+function [u, c, s, w] = get_uncertainty(y, alpha = 0.95, cut = 0, num = 8, mode = 'div', check = true)
 
-  assert(isvector(y), 'y must be a vector');
-  assert(alpha > 0 && alpha < 1, 'alpha must be in range (0, 1)');
-  assert(num >= 1, 'num must be greater or equal 1');
+  if check
+    assert(isvector(y), 'y must be a vector');
+    assert(alpha > 0 && alpha < 1, 'alpha must be in range (0, 1)');
+    assert(num >= 1, 'num must be greater or equal 1');
+  end
 
   t = 0.0;
   il = 0;

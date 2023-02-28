@@ -1,6 +1,8 @@
-function [lvls] = get_fwt_levels(n, decn, mode = "range")
+function [lvls] = get_fwt_levels(n, decn, mode = 'range', check = true)
 
-  assert(n / 2^decn >= 1, 'too many decomposition levels for given input length');
+  if check
+    assert(n / 2^decn >= 1, 'too many decomposition levels for given input length');
+  end
 
   lst = n;
 

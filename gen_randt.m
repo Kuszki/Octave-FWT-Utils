@@ -1,19 +1,20 @@
-function [vect] = gen_randt(n, u = 1, mode = 'u', c = 1.900)
+function [vect] = gen_randt(n, u = 1, mode = 'u', c = 1.900, check = false)
 
-  assert(n > 0, 'n must be greater than zero');
-  assert(u > 0, 'u must be greater than zero');
-  assert(c > 0, 'c must be greater than zero');
+  if check
+    assert(n > 0, 'n must be greater than zero');
+    assert(u > 0, 'u must be greater than zero');
+    assert(c > 0, 'c must be greater than zero');
+  end
 
-  r = rand(1, n) + rand(1, n);
-  r = r - mean(r);
+  vect = (rand(1, n) + rand(1, n)) - 1.0;
 
   switch (mode)
     case 'w'
-      vect = r * sqrt(u) / std(r);
+      vect = vect * sqrt(u) / 0.2887;
     case 's'
-      vect = r * u / std(r);
+      vect = vect * u / 0.2887;
     otherwise
-      vect = r * u / c / std(r);
+      vect = vect * u / c / 0.2887;
   end
 
 end
