@@ -10,11 +10,11 @@ function [vect] = gen_randt(n, u = 1, mode = 'u', c = 1.900, check = false)
 
   switch (mode)
     case 'w'
-      vect = vect * sqrt(u) / 0.2887;
+      vect = vect * sqrt(u) / 0.4083;
     case 's'
-      vect = vect * u / 0.2887;
+      vect = vect * u / 0.4083;
     otherwise
-      vect = vect * u / c / 0.2887;
+      vect = vect * u / c / 0.4083;
   end
 
 end
