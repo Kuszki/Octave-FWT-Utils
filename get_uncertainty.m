@@ -41,6 +41,9 @@ function [u, c, s, w] = get_uncertainty(y, alpha = 0.95, cut = 0, num = 8, mode 
 
   a = idivide(int32(l), int32(2), 'fix');
   [n, x] = hist(y, l, 1);
+  w = var(y);
+
+  if w == 0.0; u = s = c = 0.0; return; end;
 
   if mod(l, 2)
 
@@ -65,7 +68,6 @@ function [u, c, s, w] = get_uncertainty(y, alpha = 0.95, cut = 0, num = 8, mode 
 
   end
 
-  w = var(y);
   s = sqrt(w);
   c = u / s;
 

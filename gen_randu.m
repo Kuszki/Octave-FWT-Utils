@@ -1,4 +1,4 @@
-function [vect] = gen_randu(n, u = 1, mode = 'u', c = 1.650, check = false)
+function [vect] = gen_randu(n, u = 1.0, mode = 'u', c = 1.650, check = false)
 
   if check
     assert(n > 0, 'n must be greater than zero');
