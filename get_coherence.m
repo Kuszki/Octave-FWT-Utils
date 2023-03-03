@@ -1,12 +1,7 @@
-function [r] = get_coherence(y1, y2, n1 = 0, n2 = 0, vect = [], check = true)
+function [r] = get_coherence(c1, c2, r12, n1 = 0, n2 = 0, vect = [], check = true)
 
   if check
     assert(length(y1) == length(y2), 'length of input vectors must be the same');
-  end
-
-  if n1 == 0 && n2 == 0 && length(vect) == 0
-    n1 = 1; vect(1) = get_uncertainty(y1);
-    n2 = 2; vect(2) = get_uncertainty(y2);
   end
 
   if check
@@ -16,15 +11,10 @@ function [r] = get_coherence(y1, y2, n1 = 0, n2 = 0, vect = [], check = true)
   end
 
   if n1 == n2; r = 1; return; end;
+  elseif r12 > 0.9; r = r12; return; end;
 
-  vects = vect .^ 2;
-  uss = sum(vects);
+  s = 123; % WIP TODO
 
-  u1 = vect(n1); u1s = vects(n1);
-  u2 = vect(n2); u2s = vects(n2);
-  ues = get_uncertainty(y1 + y2)^2;
-
-  r = (ues - u1s - u2s) / (2 * u1 * u2);
-  r = r * (u1s + u2s) / uss;
+  r = s * (u1s + u2s) / uss;
 
 end

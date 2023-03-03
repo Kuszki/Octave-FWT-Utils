@@ -1,4 +1,4 @@
-function draw_wt_levels(wsp, info)
+function draw_wtlevels(wsp, info)
 
   mag_label = "Wzmocnienie";
   smp_label = "Numer próbki";

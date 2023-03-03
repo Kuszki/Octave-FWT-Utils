@@ -1,4 +1,4 @@
-function [a, p] = get_dyn_params(amp, phi, check = true)
+function [a, p] = get_dynparams(amp, phi, check = true)
 
   if check
     assert(length(amp) == length(phi), 'amps and phis must be the same length');

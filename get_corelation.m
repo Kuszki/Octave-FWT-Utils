@@ -1,4 +1,4 @@
-function [r] = get_corelation(y1, y2, mode = 'w', check = true)
+function [r] = get_corelation(y1, y2, check = true)
 
   if check
     assert(length(y1) == length(y2), 'length of input vectors must be the same');
