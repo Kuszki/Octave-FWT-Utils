@@ -1,8 +1,8 @@
-function [u, c, s, w] = get_uncertainty(y, alpha = 0.95, cut = 0, num = 8, mode = 'div', check = true)
+function [u, c, s, w, m] = get_uncertainty(y, alpha = 95, cut = 0, num = 1000, mode = 'fix', check = true)
 
   if check
     assert(isvector(y), 'y must be a vector');
-    assert(alpha > 0 && alpha < 1, 'alpha must be in range (0, 1)');
+    assert(alpha > 0 && alpha < 100, 'alpha must be in range (0, 1)');
     assert(num >= 1, 'num must be greater or equal 1');
   end
 
@@ -40,7 +40,7 @@ function [u, c, s, w] = get_uncertainty(y, alpha = 0.95, cut = 0, num = 8, mode 
   end
 
   a = idivide(int32(l), int32(2), 'fix');
-  [n, x] = hist(y, l, 1);
+  [n, x] = hist(y, l, 100);
   w = var(y);
 
   if w == 0.0; u = s = c = 0.0; return; end;
@@ -70,5 +70,6 @@ function [u, c, s, w] = get_uncertainty(y, alpha = 0.95, cut = 0, num = 8, mode 
 
   s = sqrt(w);
   c = u / s;
+  m = tmpmn;
 
 end

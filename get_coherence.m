@@ -15,7 +15,7 @@ function [h, s, k1, k2] = get_coherence(c1, c2, r12 = 0.0, n1 = 0, n2 = 0, vect 
     if length(vect)
       k1 = (vect(n1)^2 + vect(n2)^2) / sum(vect .^ 2);
       k2 = abs(min(vect(n1), vect(n2))/max(vect(n1), vect(n2)));
-      k2 = sqrt(k2);
+      k2 = k2^(1/3);
     else
       k1 = k2 = 1.0;
     end
