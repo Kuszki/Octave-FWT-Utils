@@ -18,18 +18,20 @@ function [h, s, k1, k2] = get_coherence(c1, c2, r12 = 0.0, n1 = 0, n2 = 0, vect 
 
       us = vect * r * transpose(vect);
       ss = sum(vect .^ 2);
-      d1 = sqrt(us) - sqrt(ss);
-      d2 = d1;# / length(vect);
+      d1 = sqrt(us) - sqrt(ss)
+      d2 = abs(d1);
 
-      k1 = (vect(n1)^2 + vect(n2)^2 + d1^2) / ss;
+      k1 = (vect(n1)^2 + vect(n2)^2 + d1^2) / ss
 
-      k2 = (min(vect(n1), vect(n2)) + d2) / (max(vect(n1), vect(n2)));
+      if d1 < 0; k1 = 1-k1; end;
+
+      k2 = (min(vect(n1)+ d2, vect(n2)+ d2)) / (max(vect(n1)+ d2, vect(n2)+ d2));
       k2 = k2^(1/3);
     else
       k1 = k2 = 1.0;
     end
 
-    h = s * k1 * k2;
+    h = s * abs(k1) * abs(k2);
 
   end
 
