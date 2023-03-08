@@ -1,4 +1,4 @@
-function [h, s, k1, k2] = get_coherence(c1, c2, r12 = 0.0, n1 = 0, n2 = 0, vect = [], check = true)
+function [h, s, k1, k2] = get_coherence(c1, c2, r12 = 0.0, n1 = 0, n2 = 0, vect = [], r = 0, check = true)
 
   if check
     assert(n1 + n2 == 0 || n1 + n2 >= 2, 'all or noone indexes must be zero given');
@@ -13,8 +13,17 @@ function [h, s, k1, k2] = get_coherence(c1, c2, r12 = 0.0, n1 = 0, n2 = 0, vect 
     s = get_shapefact(c1, c2);
 
     if length(vect)
-      k1 = (vect(n1)^2 + vect(n2)^2) / sum(vect .^ 2);
-      k2 = abs(min(vect(n1), vect(n2))/max(vect(n1), vect(n2)));
+
+      if length(r) == 1; r = diag(ones(1, length(c))); end;
+
+      us = vect * r * transpose(vect);
+      ss = sum(vect .^ 2);
+      d1 = sqrt(us) - sqrt(ss);
+      d2 = d1;# / length(vect);
+
+      k1 = (vect(n1)^2 + vect(n2)^2 + d1^2) / ss;
+
+      k2 = (min(vect(n1), vect(n2)) + d2) / (max(vect(n1), vect(n2)));
       k2 = k2^(1/3);
     else
       k1 = k2 = 1.0;
