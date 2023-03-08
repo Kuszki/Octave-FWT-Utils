@@ -28,12 +28,7 @@ function [h, r] = gen_coherence(p1, p2, c1, c2, mode = 'u', num = 1e6, cor = 0.0
     x2 = sqrt(cor+1)*x2 - sqrt(-cor)*x1;
   end
 
-  [u1, c1, s1, w1] = get_uncertainty(x1);
-  [u2, c2, s2, w2] = get_uncertainty(x2);
-  [u3, c3, s3, w3] = get_uncertainty(x1 + x2);
-
-  h = (u3^2 - u1^2 - u2^2) / (2*u1*u2);
-  r = (w3 - w1 - w2) / (2*s1*s2);
+  [h, r] = get_corelation(x1, x2, check);
 
 end
 

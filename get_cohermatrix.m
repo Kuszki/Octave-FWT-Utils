@@ -13,7 +13,7 @@ function [h, s, k1, k2] = get_cohermatrix(c, u, r = 0.0, check = true)
       if i == j; h(i,j) = s(i,j) = k1(i,j) = k2(i,j) = 1;
       elseif h(i,j) == 0
 
-        [ch, cs, ck1, ck2] = get_coherence(c(i), c(j), r(i,j), i, j, u);
+        [ch, cs, ck1, ck2] = get_coherence(c(i), c(j), r(i,j), i, j, u, r);
 
         h(i,j) = h(j,i) = ch;
         s(i,j) = s(j,i) = cs;
