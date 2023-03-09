@@ -28,7 +28,7 @@ function [h, r] = gen_coherence(p1, p2, c1, c2, mode = 'u', num = 1e6, cor = 0.0
     x2 = sqrt(cor+1)*x2 - sqrt(-cor)*x1;
   end
 
-  [h, r] = get_corelation(x1, x2, check);
+  [h, r] = get_corelation(x1, x2, false);
 
 end
 
