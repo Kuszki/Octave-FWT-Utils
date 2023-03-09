@@ -1,8 +1,10 @@
 function [h, s, k1, k2] = get_coherence(c1, c2, r12 = 0.0, n1 = 0, n2 = 0, uv = [], rv = [], check = false)
 
   isrok = !check || !length(rv) || (rows(rv) == length(uv) && columns(rv) == length(uv));
+  issin = strcmp(c1, 's') || strcmp(c2, 's');
 
   if check
+    assert(r12 == 0.0 || strcmp(c1, c2), 'c1 and s2 must be the same if r12 != 0.0');
     assert(n1 + n2 == 0 || n1 + n2 >= 2, 'all or noone indexes must be zero given');
     assert(n1 >= 0 && n1 <= length(uv), 'index n1 must be in range of uncertainty uvor');
     assert(n2 >= 0 && n2 <= length(uv), 'index n2 must be in range of uncertainty uvor');
