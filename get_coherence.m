@@ -1,7 +1,6 @@
 function [h, s, k1, k2] = get_coherence(c1, c2, r12 = 0.0, n1 = 0, n2 = 0, uv = [], rv = [], check = false)
 
   isrok = !check || !length(rv) || (rows(rv) == length(uv) && columns(rv) == length(uv));
-  issin = strcmp(c1, 's') || strcmp(c2, 's');
 
   if check
     assert(r12 == 0.0 || strcmp(c1, c2), 'c1 and s2 must be the same if r12 != 0.0');
@@ -21,7 +20,6 @@ function [h, s, k1, k2] = get_coherence(c1, c2, r12 = 0.0, n1 = 0, n2 = 0, uv = 
      h = interp1(dat(:,1), dat(:,2), r12);
 
      k1 = k2 = 1.0;
-     #h = s = r12;
 
   else
 
@@ -43,8 +41,8 @@ function [h, s, k1, k2] = get_coherence(c1, c2, r12 = 0.0, n1 = 0, n2 = 0, uv = 
       k1 = u1^2 + u2^2 + d1^2;
       k1 = k1 / ss;
 
-      k2 = (min(u1, u2) + d2) / (max(u1, u2));
-      k2 = k2^(1/2);
+      %k2 = (min(u1, u2) + d2) / (max(u1, u2));
+      %k2 = k2^(1/2);
 
       if d1 < 0; k1 = 1 - k1; end;
 
