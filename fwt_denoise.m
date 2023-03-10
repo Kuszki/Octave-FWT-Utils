@@ -1,28 +1,28 @@
 function [out] = fwt_denoise(wsp, info, type = 'hard')
 
-  lmb = sqrt(2*log(info.Ls)) * median(abs(wsp(info.Lc(info.J + 1) : length(wsp)))) / 0.6745;
-  out = wsp;
+	lmb = sqrt(2*log(info.Ls)) * median(abs(wsp(info.Lc(info.J + 1) : length(wsp)))) / 0.6745;
+	out = wsp;
 
-  if strcmp(type, 'hard')
+	if strcmp(type, 'hard')
 
-    parfor i = 1 : info.Ls
+		parfor i = 1 : info.Ls
 
-      if abs(out(i)) <= lmb
+			if abs(out(i)) <= lmb
 
-        out(i) = 0;
+				out(i) = 0;
 
-      end
+			end
 
-    end
+		end
 
-  else
+	else
 
-    for i = 1 : info.Ls
+		for i = 1 : info.Ls
 
-      out(i) = sign(out(i)) * max(0, abs(out(i)) - lmb);
+			out(i) = sign(out(i)) * max(0, abs(out(i)) - lmb);
 
-    end
+		end
 
-  end
+	end
 
 end

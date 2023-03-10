@@ -1,21 +1,21 @@
 function [a] = get_rowcoef(wsp, i)
 
-  if isvector(wsp)
+	if isvector(wsp)
 
-    a = sqrt(sum(wsp.^2));
+		a = sqrt(sum(wsp.^2));
 
-  elseif is_matrix(i)
+	elseif is_matrix(i)
 
-    for j = 1 : length(i)
+		for j = 1 : length(i)
 
-      a(j) = sqrt(sum(wsp(i(j),:).^2));
+			a(j) = sqrt(sum(wsp(i(j),:).^2));
 
-    end
+		end
 
-  else
+	else
 
-    a = sqrt(sum(wsp(i,:).^2));
+		a = sqrt(sum(wsp(i,:).^2));
 
-  end
+	end
 
 end
