@@ -1,75 +1,29 @@
-function [u, c, s, w, m] = get_uncertainty(y, alpha = 95, cut = 0, num = 1000, mode = 'fix', check = true)
+function [up, um, s, w, m] = calc_uncertainty(y, alpha = 95, mode = 's', check = false)
 
 	if check
-		assert(isvector(y), 'y must be a vector');
-		assert(alpha > 0 && alpha < 100, 'alpha must be in range (0, 1)');
-		assert(num >= 1, 'num must be greater or equal 1');
+		assert(alpha > 0 && alpha < 100, 'alpha must be in range (0, 100)');
+		assert(isvector(y) && length(y) > 1, 'y must be a vector');
 	end
 
-	t = 0.0;
-	il = 0;
-	ir = 0;
+	m = mean(y); w = var(y); s = sqrt(w);
+	[n, x] = hist(y - m, 1000, 100);
 
-	stdev = std(y)*cut;
-	tmpmn = mean(y);
-	numok = 0;
+	ip = 1; ta = 0;
 
-	if cut > 1
+	while x(ip) < m; ++ip; end
 
-		for j = 1 : length(y)
-			if abs(y(j) - tmpmn) < stdev
+	im = ip - 1;
 
-				numok = numok + 1;
-
-				if j != numok
-					y(numok) = y(j);
-				end
-
-			end
-		end
-
-		y = y(1 : numok);
-		y = y - mean(y);
-
-	else
-		y = y - tmpmn;
+	while ta < alpha
+		ta = ta + n(ip++) + n(im--);
 	end
 
-	if !strcmp(mode, 'div'); l = num;
-	else; l = floor(length(y) / num);
+	up = x(ip-1);
+	um = x(im+1);
+
+	if strcmp(mode, 's')
+		up = (up - um) / 2.0;
+		um = up / s;
 	end
-
-	a = idivide(int32(l), int32(2), 'fix');
-	[n, x] = hist(y, l, 100);
-	w = var(y);
-
-	if w == 0.0; u = s = c = 0.0; return; end;
-
-	if mod(l, 2)
-
-		t = t + n(a + 1);
-		il = a;
-		ir = a + 2;
-
-	else
-
-		il = a;
-		ir = a + 1;
-
-	end
-
-	while t < alpha
-
-		t = t + n(il) + n(ir);
-		u = (abs(x(il)) + abs(x(ir)))/2;
-
-		il = il - 1;
-		ir = ir + 1;
-
-	end
-
-	s = sqrt(w);
-	c = u / s;
-	m = tmpmn;
 
 end
