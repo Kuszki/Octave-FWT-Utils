@@ -1,4 +1,4 @@
-function [up, um, s, w, m] = calc_uncertainty(y, alpha = 95, mode = 's', check = false)
+function [up, um, s, w, m] = get_uncertainty(y, alpha = 95, mode = 's', check = false)
 
 	if check
 		assert(alpha > 0 && alpha < 100, 'alpha must be in range (0, 100)');
@@ -6,7 +6,7 @@ function [up, um, s, w, m] = calc_uncertainty(y, alpha = 95, mode = 's', check =
 	end
 
 	m = mean(y); w = var(y); s = sqrt(w);
-	[n, x] = hist(y - m, 1000, 100);
+	[n, x] = hist(y, 1000, 100);
 
 	ip = 1; ta = 0;
 
