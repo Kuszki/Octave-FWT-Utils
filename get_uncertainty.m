@@ -15,8 +15,8 @@ function [up, um, s, w, m] = get_uncertainty(y, alpha = 95, mode = 's', check = 
 	ta = n(im = ip);
 
 	while ta < alpha
-		if im >= 1; ta = ta + n(--im); end
-		if ip <= 1001 ta = ta + n(++ip); end
+		if im > 1; ta = ta + n(--im); end
+		if ip < 1001 ta = ta + n(++ip); end
 	end
 
 	up = x(ip);
