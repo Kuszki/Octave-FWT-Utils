@@ -6,20 +6,21 @@ function [up, um, s, w, m] = get_uncertainty(y, alpha = 95, mode = 's', check = 
 	end
 
 	m = mean(y); w = var(y); s = sqrt(w);
-	[n, x] = hist(y, 1000, 100);
+	[n, x] = hist(y, 1001, 100);
 
 	ip = 1; ta = 0;
 
 	while x(ip) < m; ++ip; end
 
-	im = ip - 1;
+	ta = n(im = ip);
 
 	while ta < alpha
-		ta = ta + n(ip++) + n(im--);
+		if im >= 1; ta = ta + n(--im); end
+		if ip <= 1001 ta = ta + n(++ip); end
 	end
 
-	up = x(ip-1);
-	um = x(im+1);
+	up = x(ip);
+	um = x(im);
 
 	if strcmp(mode, 's')
 		up = (up - um) / 2.0;
