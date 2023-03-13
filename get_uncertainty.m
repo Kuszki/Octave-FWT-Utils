@@ -9,15 +9,14 @@ function [up, um, s, w, m] = get_uncertainty(y, alpha = 95, issym = true, check 
 	w = var(y);
 	s = sqrt(w);
 
-	ln = 3001;
+	ln = 3000;
 	ip = 1;
-	ta = 0;
 
 	[n, x] = hist(y, ln, 100);
-
 	while x(ip) < m; ++ip; end
 
-	ta = n(im = ip);
+	im = ip--;
+	ta = 0;
 
 	while ta < alpha
 		if im > 1; ta = ta + n(--im); end
