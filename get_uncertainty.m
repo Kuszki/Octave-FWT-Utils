@@ -9,7 +9,7 @@ function [up, um, s, w, m] = get_uncertainty(y, alpha = 95, issym = true, check 
 	w = var(y);
 	s = sqrt(w);
 
-	ln = 3000;
+	ln = 3001;
 	ip = 1;
 	ta = 0;
 
@@ -17,7 +17,7 @@ function [up, um, s, w, m] = get_uncertainty(y, alpha = 95, issym = true, check 
 
 	while x(ip) < m; ++ip; end
 
-	im = ip--;
+	ta = n(im = ip);
 
 	while ta < alpha
 		if im > 1; ta = ta + n(--im); end
