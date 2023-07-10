@@ -1,5 +1,8 @@
 function [h, r] = gen_coherence(p1, p2, c1, c2, mode = 'u', num = 1e6)
 
+	assert(sum(c1 == "nuts") == 1, 'c1 must be "n", "u", "t" or "s"');
+	assert(sum(c2 == "nuts") == 1, 'c2 must be "n", "u", "t" or "s"');
+
 	switch (c1)
 		case 'n'
 			x1 = gen_randn(num, p1, mode);

@@ -1,8 +1,6 @@
 function [vect] = gen_rands(n, u = 1.0, mode = 'u', c = 1.415, check = false)
 
 	if check
-		assert(sum(mode == "uws") == 1, 'mode must be "u", "s" or "w"');
-
 		assert(n > 0, 'n must be greater than zero');
 		assert(u > 0, 'u must be greater than zero');
 		assert(c > 0, 'c must be greater than zero');
