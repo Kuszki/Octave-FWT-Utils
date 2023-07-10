@@ -1,20 +1,34 @@
-function [a] = get_rowcoef(wsp, i)
+function [a] = get_rowcoef(wsp, i, mode)
+
+	mode = strcmp(mode, 'r');
 
 	if isvector(wsp)
 
-		a = sqrt(sum(wsp.^2));
+		if mode
+			a = sqrt(sum(wsp.^2));
+		else
+			a = sum(wsp);
+		end
 
 	elseif is_matrix(i)
 
 		for j = 1 : length(i)
 
-			a(j) = sqrt(sum(wsp(i(j),:).^2));
+			if mode
+				a(j) = sqrt(sum(wsp(i(j),:).^2));
+			else
+				a(j) = sum(wsp(i(j),:));
+			end
 
 		end
 
 	else
 
-		a = sqrt(sum(wsp(i,:).^2));
+		if mode
+			a = sqrt(sum(wsp(i,:).^2));
+		else
+			a = sum(wsp(i,:));
+		end
 
 	end
 
