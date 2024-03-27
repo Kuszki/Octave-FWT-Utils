@@ -10,6 +10,8 @@ function [c] = get_coverfact(cv)
 				c(i) = 1.90;
 			case 's'
 				c(i) = 1.41;
+			case 'r'
+				c(i) = 2.16;
 			otherwise
 				c(i) = 0.00;
 		end
