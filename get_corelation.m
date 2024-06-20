@@ -1,6 +1,7 @@
 function [h, r] = get_corelation(y1, y2, alpha = 95, check = true)
 
 	if check
+		assert(alpha > 0 && alpha < 100, 'alpha must be in range ( 0 ; 100 )');
 		assert(length(y1) == length(y2), 'length of input vectors must be the same');
 	end
 

@@ -1,8 +1,8 @@
-function [u, c, s, w, h] = get_unccalc(uv, cv, mode = 'u')
+function [u, c, s, w, h] = get_unccalc(uv, cv, alpha = 95, mode = 'u', map = containers.Map())
 
 	assert(length(uv) == length(cv), 'cv and uv must be the same length');
 
-	kv = get_coverfact(cv);
+	kv = get_coverfact(cv, alpha);
 
 	if strcmp(mode, 'w')
 		uv = kv .* sqrt(uv);
@@ -10,7 +10,11 @@ function [u, c, s, w, h] = get_unccalc(uv, cv, mode = 'u')
 		uv = kv .* uv;
 	end
 
-	h = get_cohermatrix(cv, uv);
+	if length(map) == 0
+		map = load_shapes(alpha);
+	end
+
+	h = get_cohermatrix(cv, uv, map);
 	u = sqrt(uv*h*transpose(uv));
 	w = sum((uv ./ kv).^2);
 	s = sqrt(w);

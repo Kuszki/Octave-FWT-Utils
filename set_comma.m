@@ -1,7 +1,7 @@
 function set_comma(ahandle, aname, varargin)
 
 	if (nargin < 2 || nargin > 3)
-		error('Wrong number of input parameters');
+		error('wrong number of input parameters');
 	end
 
 	switch aname
@@ -28,7 +28,7 @@ function set_comma(ahandle, aname, varargin)
 
 		otherwise
 
-			error('Wrong axis name - use one of X, Y or XY');
+			error('wrong axis name - use one of X, Y or XY');
 
 	end
 

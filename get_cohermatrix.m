@@ -1,18 +1,25 @@
-function [h, s, k1, k2] = get_cohermatrix(c, u, check = true)
+function [h, s, k1, k2] = get_cohermatrix(cv, uv, map, check = true)
 
 	if check
-		assert(length(c) == length(u), 'c and u must be the same length');
+		assert(length(cv) == length(uv), 'c and u must be the same length');
 	end
 
-	h = s = k1 = k2 = zeros(length(c), length(c));
+	h = s = k1 = k2 = d = zeros(length(cv), length(cv));
+	su = sum(uv .^ 2);
 
-	for i = 1 : length(c)
-		for j = 1 : length(c)
+	for i = 1 : length(cv)
+		for j = 1 : length(cv)
+
 			if i == j; h(i,j) = s(i,j) = k1(i,j) = k2(i,j) = 1;
-			elseif h(i,j) == 0.0
+			elseif d(i,j) == false
 
-				[ch, cs, ck1, ck2] = get_coherence(c(i), c(j), i, j, u);
+				ck2 = sqrt(min(uv(i), uv(j)) / max(uv(i), uv(j)));
+				ck1 = (uv(i)^2 + uv(j)^2) / su;
 
+				cs = map([cv(i) cv(j)]);
+				ch = abs(cs * ck1 * ck2);
+
+				d(i,j) = d(j,i) = true;
 				h(i,j) = h(j,i) = ch;
 				s(i,j) = s(j,i) = cs;
 
@@ -20,6 +27,7 @@ function [h, s, k1, k2] = get_cohermatrix(c, u, check = true)
 				k2(i,j) = k2(j,i) = ck2;
 
 			end
+
 		end
 	end
 

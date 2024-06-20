@@ -1,4 +1,4 @@
-function [vect] = gen_rands(n, u = 1.0, mode = 'u', alpha = 95, check = false)
+function [vect] = gen_randd(n, u = 1.0, mode = 'u', alpha = 95, check = false)
 
 	if check
 		assert(alpha > 0 && alpha < 100, 'alpha must be in range ( 0 ; 100 )');
@@ -9,7 +9,7 @@ function [vect] = gen_rands(n, u = 1.0, mode = 'u', alpha = 95, check = false)
 	c =	1.221e-11*alpha^5 - 4.680e-10*alpha^4 - ...
 		8.686e-7*alpha^3 - 1.497e-6*alpha^2 + ...
 		2.223e-2*alpha;
-	vect = sin((rand(1, n) - 0.5) * 2 * pi);
+	vect = sin(3 * rand(1,1) * (1 : n) + rand(1,1));
 
 	switch (mode)
 		case 'w'
