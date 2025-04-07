@@ -1,7 +1,8 @@
-function [a, p, u, w, vx, vy] = get_dynparams(amp, phi, check = true)
+function [a, p, u, w, vx, vy] = get_dynparams(amp, phi, alpha = 95, check = true)
 
 	if check
 		assert(length(amp) == length(phi), 'amps and phis must be the same length');
+		assert(alpha >= 1 && alpha <= 99, 'alpha must be in range < 1 ; 99 >');
 	end
 
 	vx = 0.0;
@@ -16,7 +17,7 @@ function [a, p, u, w, vx, vy] = get_dynparams(amp, phi, check = true)
 
 	a = sqrt(vx^2 + vy^2);
 	p = atan2(vy, vx);
-	u = 1.41 * a/sqrt(2);
+	u = get_coverfact('s', alpha) * a/sqrt(2);
 	w = a^2 / 2;
 
 end
