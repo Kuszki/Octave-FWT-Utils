@@ -11,9 +11,11 @@ function [up, um, s, w, m] = get_uncertainty(y, alpha = 95, issym = true, check 
 
 	ln = round(length(y)/10);
 	[n, x] = hist(y, ln, 100);
+
+	max_ip = length(x);
 	ip = 1;
 
-	while x(ip) < m; ++ip; end
+	while x(ip) < m && ip < max_ip; ++ip; end
 
 	im = ip--;
 	ta = 0;
