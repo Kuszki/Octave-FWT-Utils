@@ -6,7 +6,6 @@ function [vect] = gen_randn(n, u = 1.0, mode = 'u', alpha = 95, check = false)
 		assert(u > 0, 'u must be greater than zero');
 	end
 
-	c = norminv(1 - (1 - alpha/100) / 2);
 	vect = randn(1, n);
 
 	switch (mode)
@@ -15,7 +14,7 @@ function [vect] = gen_randn(n, u = 1.0, mode = 'u', alpha = 95, check = false)
 		case 's'
 			vect = vect * u;
 		otherwise
-			vect = vect * u / c;
+			vect = vect * u / norminv(1 - (1 - alpha/100) / 2);
 	end
 
 end

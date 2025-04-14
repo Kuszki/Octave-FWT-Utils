@@ -6,7 +6,6 @@ function [vect] = gen_randu(n, u = 1.0, mode = 'u', alpha = 95, check = false)
 		assert(u > 0, 'u must be greater than zero');
 	end
 
-	c = sqrt(3)*(alpha/100);
 	vect = rand(1, n) - 0.5;
 
 	switch (mode)
@@ -15,7 +14,7 @@ function [vect] = gen_randu(n, u = 1.0, mode = 'u', alpha = 95, check = false)
 		case 's'
 			vect = vect * u / 0.2887;
 		otherwise
-			vect = vect * u / c / 0.2887;
+			vect = vect * u / (sqrt(3)*(alpha/100)) / 0.2887;
 	end
 
 end
